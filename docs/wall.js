@@ -1,8 +1,9 @@
-/* wall.js — cwi-placement-wall v1.0.0
+/* wall.js — cwi-placement-wall v1.1.0
  * Zero-dependency UMD engine for the CWI Catalog Placement Wall.
  * Renders scan-verified playlist placements for the That Boy Hi Hat catalog.
  * Never estimates: positions are snapshots, staleness is computed from
  * verified_at, and anything older than STALE_AFTER_DAYS flips to STALE.
+ * v1.1.0: per-track official cover art on verified mappings (artwork field).
  * Served byte-identical from the Pages site.
  */
 (function (root, factory) {
@@ -18,6 +19,7 @@
   var STALE_AFTER_DAYS = 30;
   var SPOTIFY_ID_RE = /^[A-Za-z0-9]{22}$/;
   var ISO_RE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[-+]\d{2}:\d{2}$/;
+  var ARTWORK_RE = /^assets\/covers\/[a-z0-9-]+\.(jpg|jpeg|png|webp)$/;
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -76,6 +78,9 @@
       if (!/^https:\/\/open\.spotify\.com\/playlist\//.test(p.proof_url || '')) {
         err(path + '.proof_url', 'must be an open.spotify.com playlist URL');
       }
+      if (p.artwork !== undefined && !ARTWORK_RE.test(p.artwork)) {
+        err(path + '.artwork', 'must be a relative path under assets/covers/ (verified mapping only)');
+      }
     });
     return { ok: errors.length === 0, errors: errors };
   }
@@ -132,7 +137,11 @@
   function groupCard(g) {
     var rows = g.records.map(function (p) {
       var note = p.note ? '<p class="note">' + escapeHtml(p.note) + '</p>' : '';
-      return '<li class="track-row">' +
+      var cover = p.artwork
+        ? '<span class="cover"><img src="' + escapeHtml(p.artwork) + '" alt="' +
+          escapeHtml(p.track) + ' cover art" loading="lazy"></span>'
+        : '<span class="cover cover-none" aria-hidden="true"></span>';
+      return '<li class="track-row">' + cover +
         '<span class="pos">#' + p.position + '<small>/' + p.of_total + '</small></span>' +
         '<span class="track">' + escapeHtml(p.track) +
           '<a class="listen" href="https://open.spotify.com/track/' + escapeHtml(p.track_spotify_id) +
@@ -168,7 +177,7 @@
   }
 
   return {
-    VERSION: '1.0.0',
+    VERSION: '1.1.0',
     SCHEMA: SCHEMA,
     STALE_AFTER_DAYS: STALE_AFTER_DAYS,
     escapeHtml: escapeHtml,

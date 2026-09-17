@@ -31,7 +31,9 @@ main{max-width:46rem;margin:0 auto;padding:0 1rem}
 .card .followers{color:var(--silver)}
 .card iframe{border-radius:.6rem;margin:.2rem 0 .6rem;background:#000}
 .tracks{list-style:none}
-.track-row{display:grid;grid-template-columns:auto 1fr auto;gap:.15rem .7rem;align-items:center;padding:.7rem 0;border-top:1px solid var(--line)}
+.track-row{display:grid;grid-template-columns:auto auto 1fr auto;gap:.15rem .7rem;align-items:center;padding:.7rem 0;border-top:1px solid var(--line)}
+.cover img{width:52px;height:52px;border-radius:.45rem;object-fit:cover;display:block;border:1px solid var(--line)}
+.cover-none{width:52px;height:52px}
 .pos{font-size:1.35rem;font-weight:700;color:var(--gold)}
 .pos small{font-size:.7rem;color:var(--dim);font-weight:400}
 .track{color:#fff;font-weight:600}
@@ -84,12 +86,12 @@ footer a{margin:0 .4rem}
   </p>
   <p id="asof"></p>
 </footer>
-<script src="wall.js?v=20260917"></script>
+<script src="wall.js?v=20260917b"></script>
 <script>
 (function(){
   var params = new URLSearchParams(location.search);
   var only = params.get('playlist');
-  fetch('placements.json?v=20260917').then(function(r){return r.json();}).then(function(data){
+  fetch('placements.json?v=20260917b').then(function(r){return r.json();}).then(function(data){
     var res = Wall.validate(data);
     if(!res.ok){ document.getElementById('wall').innerHTML =
       '<p style="color:#ff5d5d">Data failed validation: '+Wall.escapeHtml(res.errors.join('; '))+'</p>'; return; }
