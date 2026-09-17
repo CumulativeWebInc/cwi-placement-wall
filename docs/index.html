@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalog Placement Wall — That Boy Hi Hat · Cumulative Web Inc</title>
+<meta name="description" content="Scan-verified playlist placements for the That Boy Hi Hat catalog. Every position is a dated snapshot with a check-it-yourself proof link.">
+<link rel="icon" href="assets/cwi-logo.jpg">
+<style>
+:root{
+  --bg:#0b0e14; --panel:#121826; --line:#232c40;
+  --gold:#e8b93c; --cyan:#35e0e6; --silver:#c9d6ea; --dim:#8b96ad;
+  --green:#3ddc84; --red:#ff5d5d; --amber:#ffb020;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--silver);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;padding:0 0 3rem}
+a{color:var(--cyan)}
+.hero{padding:2.2rem 1.2rem 1.4rem;text-align:center;border-bottom:1px solid var(--line)}
+.hero img.logo{width:84px;height:84px;border-radius:50%;border:2px solid var(--gold);object-fit:cover}
+.hero h1{font-size:1.6rem;color:#fff;margin:.7rem 0 .2rem;letter-spacing:.02em}
+.hero h1 .gold{color:var(--gold)}
+.hero p.sub{color:var(--dim);font-size:.95rem;max-width:34rem;margin:0 auto}
+.summary{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;padding:1.1rem .8rem}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:.7rem;padding:.6rem 1rem;text-align:center;min-width:7.5rem}
+.stat b{display:block;font-size:1.5rem;color:var(--gold)}
+.stat span{font-size:.72rem;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+main{max-width:46rem;margin:0 auto;padding:0 1rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:.9rem;margin:1.2rem 0;padding:1.1rem;overflow:hidden}
+.card header h2{color:#fff;font-size:1.25rem}
+.card .curator{color:var(--dim);font-size:.85rem;margin:.15rem 0 .8rem}
+.card .followers{color:var(--silver)}
+.card iframe{border-radius:.6rem;margin:.2rem 0 .6rem;background:#000}
+.tracks{list-style:none}
+.track-row{display:grid;grid-template-columns:auto 1fr auto;gap:.15rem .7rem;align-items:center;padding:.7rem 0;border-top:1px solid var(--line)}
+.pos{font-size:1.35rem;font-weight:700;color:var(--gold)}
+.pos small{font-size:.7rem;color:var(--dim);font-weight:400}
+.track{color:#fff;font-weight:600}
+.listen{display:inline-block;margin-left:.5rem;font-size:.75rem;font-weight:400}
+.note{grid-column:1/-1;color:var(--dim);font-size:.82rem}
+.when{grid-column:1/-1;font-size:.72rem;color:var(--dim)}
+.chip{font-size:.68rem;font-weight:700;letter-spacing:.08em;padding:.2rem .55rem;border-radius:2rem;text-transform:uppercase}
+.chip-verified{background:rgba(61,220,132,.14);color:var(--green);border:1px solid rgba(61,220,132,.4)}
+.chip-stale{background:rgba(255,93,93,.12);color:var(--red);border:1px solid rgba(255,93,93,.4)}
+.chip-unverified{background:rgba(255,176,32,.12);color:var(--amber);border:1px solid rgba(255,176,32,.4)}
+.proof{display:inline-block;margin-top:.7rem;font-size:.85rem}
+.panel{border:1px dashed var(--line);border-radius:.9rem;padding:1rem 1.1rem;margin:1.4rem 0;font-size:.87rem}
+.panel h3{font-size:.95rem;margin-bottom:.5rem;color:var(--gold)}
+.panel ul{padding-left:1.2rem}
+.panel li{margin:.3rem 0;color:var(--dim)}
+.kill{border-color:rgba(255,93,93,.45)}
+.kill h3{color:var(--red)}
+footer{max-width:46rem;margin:2rem auto 0;padding:1rem;font-size:.78rem;color:var(--dim);text-align:center}
+footer a{margin:0 .4rem}
+.filterbar{display:none;background:#1a1420;border:1px solid var(--gold);border-radius:.7rem;padding:.7rem 1rem;margin:1rem 0;font-size:.85rem}
+.filterbar.show{display:block}
+</style>
+</head>
+<body>
+<div class="hero">
+  <img class="logo" src="assets/cwi-logo.jpg" alt="Cumulative Web Inc logo">
+  <h1>Catalog <span class="gold">Placement Wall</span></h1>
+  <p class="sub">Every playlist placement for the That Boy Hi Hat catalog — scan-verified, dated, and checkable. Positions are snapshots; proof links open the live playlist.</p>
+</div>
+<div class="summary" id="summary" aria-live="polite"></div>
+<main>
+  <div class="filterbar" id="filterbar"></div>
+  <div id="wall"></div>
+  <section class="panel" aria-label="Honest limits">
+    <h3>Honest limits</h3>
+    <ul id="limits"></ul>
+  </section>
+  <section class="panel kill" aria-label="Kill rule">
+    <h3>Kill rule</h3>
+    <p id="kill"></p>
+  </section>
+</main>
+<footer>
+  <p>Cumulative Web Inc · That Boy Hi Hat catalog</p>
+  <p>
+    <a href="placements.json">placements.json</a>·
+    <a href="placements.schema.json">schema cwi.placement-record/1.0</a>·
+    <a href="wall.js">wall.js engine</a>·
+    <a href="llms.txt">llms.txt</a>
+  </p>
+  <p id="asof"></p>
+</footer>
+<script src="wall.js?v=20260917"></script>
+<script>
+(function(){
+  var params = new URLSearchParams(location.search);
+  var only = params.get('playlist');
+  fetch('placements.json?v=20260917').then(function(r){return r.json();}).then(function(data){
+    var res = Wall.validate(data);
+    if(!res.ok){ document.getElementById('wall').innerHTML =
+      '<p style="color:#ff5d5d">Data failed validation: '+Wall.escapeHtml(res.errors.join('; '))+'</p>'; return; }
+    var s = Wall.summarize(data);
+    var d = new Date(s.latestVerifiedAt);
+    document.getElementById('summary').innerHTML =
+      stat(s.playlistCount,'playlists')+stat(s.trackPlacementCount,'track placements')+
+      stat(s.trackCount,'tracks')+stat(d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),'latest scan');
+    function stat(n,l){return '<div class="stat"><b>'+Wall.escapeHtml(String(n))+'</b><span>'+l+'</span></div>';}
+    document.getElementById('wall').innerHTML = Wall.render(data);
+    document.getElementById('limits').innerHTML = data.honest_limits.map(function(l){
+      return '<li>'+Wall.escapeHtml(l)+'</li>';}).join('');
+    document.getElementById('kill').textContent = data.kill_rule;
+    document.getElementById('asof').textContent = 'Data as of '+data.as_of+' · '+data.verification_method;
+    if(only){
+      var groups = Wall.filterByPlaylist(data, only);
+      if(groups.length){
+        document.getElementById('wall').innerHTML = groups.map(Wall.groupCard).join('');
+        var fb = document.getElementById('filterbar');
+        fb.classList.add('show');
+        fb.innerHTML = 'Showing one playlist: <b>'+Wall.escapeHtml(groups[0].playlist_name)+
+          '</b> — <a href="./">show the whole wall</a>';
+      }
+    }
+  }).catch(function(e){
+    document.getElementById('wall').innerHTML = '<p style="color:#ff5d5d">Could not load placements.json: '+
+      Wall.escapeHtml(e.message)+'</p>';
+  });
+})();
+</script>
+</body>
+</html>

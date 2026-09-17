@@ -1,0 +1,1 @@
+{"description":"Scan-verified playlist placements for the That Boy Hi Hat catalog. Machine-readable snapshots: placements.json (cwi.placement-record/1.0), zero-dep engine wall.js.","name":"CWI Catalog Placement Wall","protocols":["cwi.placement-record/1.0"],"url":"https://cumulativewebinc.github.io/cwi-placement-wall/"}

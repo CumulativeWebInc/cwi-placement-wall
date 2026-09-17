@@ -1,0 +1,23 @@
+# Catalog Placement Wall — Cumulative Web Inc
+
+Scan-verified playlist placements for the That Boy Hi Hat catalog
+(Spotify artist 2f9j460EwjfvjYp3trBcb7).
+
+- Live: https://cumulativewebinc.github.io/cwi-placement-wall/
+- Data: /placements.json (schema cwi.placement-record/1.0)
+- Schema: /placements.schema.json
+- Engine: /wall.js (zero-dep UMD: validate, summarize, render, ?playlist= filter)
+- Agent card: /.well-known/agent-card.json
+
+Current verified placements (snapshots, verified 2026-09-17 by the CWI data
+engine via Spotify Web API full-playlist scans):
+- "New Rap Hits" (Audiartist, 673 followers): Shaka Zulu #21, Zooted Zone #30,
+  Doves & Diamonds #31 of 140.
+- "No Label Needed" (Flow): Zooted Zone #21 of 21.
+- "360° : The Best Indie Music" (Eric Alper): Zooted Zone #216 of 216 —
+  added 2026-09-17 in reply to the 2026-09-14 pitch.
+
+Truth rules: positions are snapshots at verified_at; follower counts are
+snapshots; Spotify exposes no play counts. Unverified claims are excluded,
+never shown. Kill rule: data older than 30 days flips to STALE; if scans
+stop, the wall retires.
