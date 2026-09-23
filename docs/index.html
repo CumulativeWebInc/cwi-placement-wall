@@ -5,7 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Catalog Placement Wall — That Boy Hi Hat · Cumulative Web Inc</title>
 <meta name="description" content="Scan-verified playlist placements for the That Boy Hi Hat catalog. Every position is a dated snapshot with a check-it-yourself proof link.">
+<meta property="og:title" content="Catalog Placement Wall — That Boy Hi Hat · Cumulative Web Inc">
+<meta property="og:description" content="Scan-verified playlist placements for the That Boy Hi Hat catalog. Every position is a dated snapshot with a check-it-yourself proof link.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cumulativewebinc.github.io/cwi-placement-wall/">
+<meta property="og:image" content="https://cumulativewebinc.github.io/cwi-placement-wall/assets/cwi-logo.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Catalog Placement Wall — That Boy Hi Hat · Cumulative Web Inc">
+<meta name="twitter:description" content="Scan-verified playlist placements for the That Boy Hi Hat catalog. Dated snapshots, proof links, machine-readable data.">
 <link rel="icon" href="assets/cwi-logo.jpg">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"CWI Catalog Placement Wall","url":"https://cumulativewebinc.github.io/cwi-placement-wall/","applicationCategory":"MusicApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"Cumulative Web Inc","url":"https://cumulativeweb.com"},"description":"Scan-verified playlist placements for the That Boy Hi Hat catalog. Every card is a dated scan snapshot with a proof link that opens the live playlist."}
+</script>
 <style>
 :root{
   --bg:#0b0e14; --panel:#121826; --line:#232c40;
@@ -75,14 +86,22 @@ footer a{margin:0 .4rem}
     <h3>Kill rule</h3>
     <p id="kill"></p>
   </section>
+  <section class="panel" aria-label="Get placement intelligence" style="text-align:center">
+    <h3>Want this for your catalog?</h3>
+    <p style="color:var(--dim);max-width:34rem;margin:0 auto 1rem">The Placement Wall engine scans, snapshots, and publishes proof-linked placement data for any catalog — the same scan-verified pipeline behind this wall.</p>
+    <p><a href="mailto:hp@cumulativeweb.com?subject=Placement%20Wall%20for%20my%20catalog" style="display:inline-block;background:var(--gold);color:#111;font-weight:700;border-radius:.6rem;padding:.7rem 1.4rem;text-decoration:none">Contact hp@cumulativeweb.com</a>
+    <a href="https://cumulativewebinc.github.io/cwi-placement-wall/" style="display:inline-block;border:1px solid var(--line);border-radius:.6rem;padding:.7rem 1.4rem;margin-left:.6rem">Try the live wall →</a></p>
+    <p style="color:var(--dim);font-size:.8rem;margin-top:.8rem">A Cumulative Web Inc product. Pricing on request — no prices are published without approval.</p>
+  </section>
 </main>
 <footer>
-  <p>Cumulative Web Inc · That Boy Hi Hat catalog</p>
+  <p>© 2026 Cumulative Web Inc · That Boy Hi Hat catalog · <a href="mailto:hp@cumulativeweb.com">hp@cumulativeweb.com</a></p>
   <p>
     <a href="placements.json">placements.json</a>·
     <a href="placements.schema.json">schema cwi.placement-record/1.0</a>·
     <a href="wall.js">wall.js engine</a>·
-    <a href="llms.txt">llms.txt</a>
+    <a href="llms.txt">llms.txt</a>·
+    <a href=".well-known/agent-card.json">agent card</a>
   </p>
   <p id="asof"></p>
 </footer>
