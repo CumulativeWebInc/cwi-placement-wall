@@ -10,5 +10,6 @@
     "name": "Cumulative Web Inc",
     "url": "https://cumulativeweb.com/"
   },
-  "description": "Scan-verified playlist placements for the That Boy Hi Hat catalog with trust-log proof links."
+  "description": "Scan-verified playlist placements for the That Boy Hi Hat catalog with trust-log proof links.",
+  "schema_version": "1.0.0"
 }
