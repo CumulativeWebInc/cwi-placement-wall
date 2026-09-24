@@ -1,0 +1,14 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Placement Wall (#43)",
+  "url": "https://cumulativewebinc.github.io/cwi-placement-wall/",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Web",
+  "author": {
+    "@type": "Organization",
+    "name": "Cumulative Web Inc",
+    "url": "https://cumulativeweb.com/"
+  },
+  "description": "Scan-verified playlist placements for the That Boy Hi Hat catalog with trust-log proof links."
+}
